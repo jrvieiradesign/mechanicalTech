@@ -5,16 +5,16 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    // TypeOrmModule.forRoot({
-    //   type: 'postgres',
-    //   host: 'localhost',
-    //   port: 5432,
-    //   username: 'postgres',
-    //   password: 'docker',
-    //   database: 'mecanica',
-    //   synchronize: true,
-    //   entities: [__dirname + '/**/*.entity{.js,.ts}'],
-    // }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: 'docker',
+      database: 'mecanica',
+      synchronize: true,
+      autoLoadEntities: true,
+    }),
     UsersModule,
     AuthModule,
   ],

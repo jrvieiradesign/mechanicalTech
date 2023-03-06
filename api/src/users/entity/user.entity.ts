@@ -5,12 +5,6 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   _id: number;
 
-  // @Column()
-  // firstName: string;
-
-  // @Column()
-  // lastName: string;
-
   @Column()
   name: string;
 
@@ -19,6 +13,12 @@ export class User {
 
   @Column()
   password: string;
+
+  // @Column()
+  // firstName: string;
+
+  // @Column()
+  // lastName: string;
 
   @Column({ default: true })
   isActive: boolean;
