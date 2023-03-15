@@ -1,14 +1,40 @@
-import { Controller, Request, UseGuards, Post } from '@nestjs/common';
+import {
+  Controller,
+  Request,
+  UseGuards,
+  Post,
+  Get,
+  Body,
+  Param,
+} from '@nestjs/common';
+import { AuthDto } from './dto';
 import { AuthService } from './shared/auth.service';
-import { LocalAuthGuard } from './shared/local-auth.guard';
+import { AccessTokenGuard, refreshTokenGuard } from '../common/guards';
+import { Tokens } from './types';
 
-@Controller()
+@Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @UseGuards(LocalAuthGuard)
-  @Post('auth/login')
-  async login(@Request() req: any) {
-    return this.authService.login(req.user);
+  @Post('login')
+  login(@Body() dto: AuthDto): Promise<Tokens> {
+    return this.authService.login(dto);
+  }
+
+  @Post('logout/:id')
+  logout(@Param('id') id: number): Promise<boolean> {
+    return this.authService.logout(id);
+  }
+
+  @UseGuards(refreshTokenGuard)
+  @Post('refresh')
+  refreshTokens(@Request() req): Promise<Tokens> {
+    return this.authService.refreshTokens(req.user.sub, req.user.refreshToken);
+  }
+
+  @UseGuards(AccessTokenGuard)
+  @Get('user-info')
+  getUserInfo(@Request() req) {
+    return req.user;
   }
 }
