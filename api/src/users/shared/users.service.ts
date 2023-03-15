@@ -13,8 +13,14 @@ export class UsersService {
   async findAll() {
     return await this.usersRepository.find();
   }
-  async findOne(email: string) {
+  async findOneByEmail(email: string) {
     return await this.usersRepository.findOneBy({ email });
+  }
+  async findOneById(_id: number) {
+    return await this.usersRepository.findOneBy({ _id });
+  }
+  async saveUser(user: User) {
+    return await this.usersRepository.save(user);
   }
   async store(UserEmail: CreateUserDto) {
     const user = this.usersRepository.create(UserEmail);
